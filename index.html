@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TypeRush — Typing Speed Checker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <header class="topbar">
+    <div class="logo">Type<span>Rush</span></div>
+    <div class="duration-selector" id="durationSelector">
+      <button class="duration-btn active" data-duration="15">15s</button>
+      <button class="duration-btn" data-duration="30">30s</button>
+      <button class="duration-btn" data-duration="60">60s</button>
+      <button class="duration-btn" data-duration="120">120s</button>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <section class="stats-bar" id="statsBar">
+      <div class="stat">
+        <span class="stat-value" id="statWpm">0</span>
+        <span class="stat-label">wpm</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="statAccuracy">100%</span>
+        <span class="stat-label">accuracy</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="statTime">15</span>
+        <span class="stat-label">seconds</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value"><span id="statCorrect">0</span>/<span id="statIncorrect">0</span></span>
+        <span class="stat-label">correct / errors</span>
+      </div>
+    </section>
+
+    <section class="typing-area" id="typingArea">
+      <div class="paragraph" id="paragraph" aria-label="Typing test text"></div>
+      <div class="caret" id="caret"></div>
+      <input type="text" id="hiddenInput" class="hidden-input" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false">
+    </section>
+
+    <div class="focus-hint" id="focusHint">Click here or press any key to start typing</div>
+
+    <section class="keyboard" id="keyboard" aria-hidden="true">
+      <div class="kb-row">
+        <div class="kb-key" data-code="Backquote">`</div>
+        <div class="kb-key" data-code="Digit1">1</div>
+        <div class="kb-key" data-code="Digit2">2</div>
+        <div class="kb-key" data-code="Digit3">3</div>
+        <div class="kb-key" data-code="Digit4">4</div>
+        <div class="kb-key" data-code="Digit5">5</div>
+        <div class="kb-key" data-code="Digit6">6</div>
+        <div class="kb-key" data-code="Digit7">7</div>
+        <div class="kb-key" data-code="Digit8">8</div>
+        <div class="kb-key" data-code="Digit9">9</div>
+        <div class="kb-key" data-code="Digit0">0</div>
+        <div class="kb-key" data-code="Minus">-</div>
+        <div class="kb-key" data-code="Equal">=</div>
+        <div class="kb-key kb-wide-2" data-code="Backspace">⌫</div>
+      </div>
+      <div class="kb-row">
+        <div class="kb-key kb-wide" data-code="Tab">Tab</div>
+        <div class="kb-key" data-code="KeyQ">Q</div>
+        <div class="kb-key" data-code="KeyW">W</div>
+        <div class="kb-key" data-code="KeyE">E</div>
+        <div class="kb-key" data-code="KeyR">R</div>
+        <div class="kb-key" data-code="KeyT">T</div>
+        <div class="kb-key" data-code="KeyY">Y</div>
+        <div class="kb-key" data-code="KeyU">U</div>
+        <div class="kb-key" data-code="KeyI">I</div>
+        <div class="kb-key" data-code="KeyO">O</div>
+        <div class="kb-key" data-code="KeyP">P</div>
+        <div class="kb-key" data-code="BracketLeft">[</div>
+        <div class="kb-key" data-code="BracketRight">]</div>
+        <div class="kb-key" data-code="Backslash">\</div>
+      </div>
+      <div class="kb-row">
+        <div class="kb-key kb-wide" data-code="CapsLock">Caps</div>
+        <div class="kb-key" data-code="KeyA">A</div>
+        <div class="kb-key" data-code="KeyS">S</div>
+        <div class="kb-key" data-code="KeyD">D</div>
+        <div class="kb-key" data-code="KeyF">F</div>
+        <div class="kb-key" data-code="KeyG">G</div>
+        <div class="kb-key" data-code="KeyH">H</div>
+        <div class="kb-key" data-code="KeyJ">J</div>
+        <div class="kb-key" data-code="KeyK">K</div>
+        <div class="kb-key" data-code="KeyL">L</div>
+        <div class="kb-key" data-code="Semicolon">;</div>
+        <div class="kb-key" data-code="Quote">'</div>
+        <div class="kb-key kb-wide-2" data-code="Enter">Enter</div>
+      </div>
+      <div class="kb-row">
+        <div class="kb-key kb-wide-2" data-code="ShiftLeft">Shift</div>
+        <div class="kb-key" data-code="KeyZ">Z</div>
+        <div class="kb-key" data-code="KeyX">X</div>
+        <div class="kb-key" data-code="KeyC">C</div>
+        <div class="kb-key" data-code="KeyV">V</div>
+        <div class="kb-key" data-code="KeyB">B</div>
+        <div class="kb-key" data-code="KeyN">N</div>
+        <div class="kb-key" data-code="KeyM">M</div>
+        <div class="kb-key" data-code="Comma">,</div>
+        <div class="kb-key" data-code="Period">.</div>
+        <div class="kb-key" data-code="Slash">/</div>
+        <div class="kb-key kb-wide-2" data-code="ShiftRight">Shift</div>
+      </div>
+      <div class="kb-row">
+        <div class="kb-key kb-small" data-code="ControlLeft">Ctrl</div>
+        <div class="kb-key kb-small" data-code="MetaLeft">Win</div>
+        <div class="kb-key kb-small" data-code="AltLeft">Alt</div>
+        <div class="kb-key kb-space" data-code="Space"></div>
+        <div class="kb-key kb-small" data-code="AltRight">Alt</div>
+        <div class="kb-key kb-small" data-code="MetaRight">Win</div>
+        <div class="kb-key kb-small" data-code="ControlRight">Ctrl</div>
+      </div>
+    </section>
+
+    <div class="controls">
+      <button class="restart-btn" id="restartBtn" title="Restart (Tab + Enter)">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="1 4 1 10 7 10"></polyline>
+          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+        </svg>
+        Restart
+      </button>
+    </div>
+
+    <div class="shortcut-hint">tab + enter — restart test</div>
+
+  </main>
+
+  <section class="results-screen" id="resultsScreen">
+    <h2 class="results-title">Test Complete</h2>
+    <div class="results-grid">
+      <div class="result-box">
+        <span class="result-value" id="resultWpm">0</span>
+        <span class="result-label">wpm</span>
+      </div>
+      <div class="result-box">
+        <span class="result-value" id="resultAccuracy">0%</span>
+        <span class="result-label">accuracy</span>
+      </div>
+      <div class="result-box">
+        <span class="result-value" id="resultCorrect">0</span>
+        <span class="result-label">correct chars</span>
+      </div>
+      <div class="result-box">
+        <span class="result-value" id="resultErrors">0</span>
+        <span class="result-label">errors</span>
+      </div>
+    </div>
+    <button class="retry-btn" id="retryBtn">Try Again</button>
+    <div class="shortcut-hint">tab + enter — retry</div>
+  </section>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
